@@ -20,21 +20,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix'=>'category'], function ($router){
-    Route::controller(CategoryController::class)->group(function (){
-        Route::get('index','index');
-        Route::get('show/{id}','show');
-        Route::post('store','store');
-        Route::put('update/{id}','update');
-        Route::delete('destroy/{id}','destroy');
-    });
+
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'index']);
+    Route::get('{id}', [CategoryController::class, 'show']);
+    Route::post('/', [CategoryController::class, 'store']);
+    Route::put('{id}', [CategoryController::class, 'update']);
+    Route::delete('{id}', [CategoryController::class, 'destroy']);
 });
-Route::group(['prefix'=>'product'], function ($router){
-    Route::controller(ProductController::class)->group(function (){
-        Route::get('index','index');
-        Route::get('show/{id}','show');
-        Route::post('store','store');
-        Route::put('update/{id}','update');
-        Route::delete('destroy/{id}','destroy');
+Route::prefix('products')->group(function () {
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('{id}', 'show');
+        Route::post('/', 'store');
+        Route::put('{id}', 'update');
+        Route::delete('{id}', 'destroy');
     });
 });
