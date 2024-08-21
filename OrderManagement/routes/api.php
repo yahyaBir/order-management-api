@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +29,6 @@ Route::group([
     Route::post('/token/refresh', [AuthController::class, 'refresh']);
     Route::get('/user', [AuthController::class, 'user']);
 });
-
-
 Route::prefix('categories')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->middleware('auth');
     Route::get('{id}', [CategoryController::class, 'show'])->middleware('auth');
@@ -44,5 +43,14 @@ Route::prefix('products')->group(function () {
         Route::post('/', 'store')->middleware('is_admin');
         Route::put('{id}', 'update')->middleware('is_admin');
         Route::delete('{id}', 'destroy')->middleware('is_admin');
+    });
+});
+Route::group(['prefix'=>'orders'], function ($router){
+    Route::controller(OrderController::class)->group(function (){
+        Route::get('/','index');
+        Route::get('{id}','show');
+        Route::post('/','store');
+        Route::get('users/{id}','user_orders');
+
     });
 });
