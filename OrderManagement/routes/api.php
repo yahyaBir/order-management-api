@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -51,6 +52,9 @@ Route::group(['prefix'=>'orders'], function ($router){
         Route::get('{id}','show');
         Route::post('/','store');
         Route::get('users/{id}','user_orders');
-
     });
 });
+Route::controller(CampaignController::class)->group(function (){
+    Route::get('/campaigns','index');
+});
+

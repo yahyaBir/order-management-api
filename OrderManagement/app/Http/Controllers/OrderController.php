@@ -25,7 +25,7 @@ class OrderController extends Controller
     }
 
     public function index() {
-        $orders = Order::paginate(10);
+        $orders = Order::paginate(15);
         if ($orders->isNotEmpty()) {
             foreach ($orders->items() as $order) {
                     $product = Product::find($order['product_id']);
@@ -61,14 +61,7 @@ class OrderController extends Controller
         try {
             $result = $this->orderService->createOrder($request->all());
 
-            if ($result['status'] === 'error') {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => $result['message'],
-                    'errors' => $result['errors'] ?? null
-                ], 400);
-            }
-
+            // JSON dönüşümünde diziler kullanmadan doğrudan nesneyi döndürme
             return response()->json($result['order'], 201);
 
         } catch (\Exception $e) {

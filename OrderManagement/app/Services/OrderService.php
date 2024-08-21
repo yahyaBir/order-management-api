@@ -5,11 +5,19 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderItem;
+use http\Env\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class OrderService
 {
+    protected $campaignService;
+
+    public function __construct(CampaignService $campaignService)
+    {
+        $this->campaignService = $campaignService;
+    }
+
     public function createOrder($orderData)
     {
         $validator = Validator::make($orderData, [
@@ -31,8 +39,7 @@ class OrderService
         $order->save();
 
         $totalAmount = 0;
-        $discountedAmount = 0;
-        $discountAmount = 0;
+        $orderItems = collect();
 
         foreach ($orderData['order_items'] as $order_item) {
             $product = Product::find($order_item['product_id']);
@@ -42,7 +49,6 @@ class OrderService
             }
 
             if ($product->stock_quantity >= $order_item['quantity']) {
-
                 $items = new OrderItem();
                 $items->order_id = $order->id;
                 $items->product_id = $order_item['product_id'];
@@ -51,23 +57,37 @@ class OrderService
                 $items->save();
 
                 $totalAmount += $items->quantity * $items->price;
+                $orderItems->push($items);
 
                 $product->stock_quantity -= $order_item['quantity'];
                 $product->save();
-
             } else {
                 return ['status' => 'error', 'message' => 'Insufficient stock'];
             }
         }
+        try {
 
-        $shipping_cost = $totalAmount > 50 ? 0 : 10;
-        $totalAmount += $shipping_cost;
 
-        $order->shipping_cost = $shipping_cost;
+        // Apply the best campaign
+        $campaignResult = $this->campaignService->applyBestCampaign($orderItems, $totalAmount);
+
+        $shippingCost = $campaignResult['discountedAmount'] > 50 ? 0 : 10;
+        $totalAmount = $campaignResult['discountedAmount'] + $shippingCost + $order->discount_amount;
+
+        $order->shipping_cost = $shippingCost;
+
+        $order->discounted_amount = $campaignResult['discountedAmount'];
+        $order->discount_amount = $campaignResult['discount'];
+        $totalAmount = $campaignResult['discountedAmount'] + $shippingCost + $order->discount_amount;
         $order->total_amount = $totalAmount;
+        $order->applied_campaign = $campaignResult['appliedCampaign'];
         $order->save();
 
+
         return ['status' => 'success', 'order' => $order];
+        }catch (\Exception $e){
+            return response()->json($e,500);
+        }
     }
 }
 

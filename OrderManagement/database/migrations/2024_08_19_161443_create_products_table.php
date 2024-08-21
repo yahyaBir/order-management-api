@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('author');
             $table->double('list_price',8,2);
             $table->integer('stock_quantity');
+            $table->enum('author_origin', ['local', 'foreign'])->default('local');
             $table->boolean('is_available')->default(true);
             $table->timestamps();
         });

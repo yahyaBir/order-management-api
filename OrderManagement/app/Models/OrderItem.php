@@ -20,6 +20,6 @@ class OrderItem extends Model
         $this->belongsTo(Order::class,'order_id');
     }
     public function product(){
-        $this->belongsTo(Product::class,'product_id');
+        return $this->belongsTo(Product::class);
     }
 }
