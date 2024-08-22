@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->references('id')->on('category')->onDelete('cascade');
-            $table->string('product_title');
-            $table->string('author');
+            $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreignId('author_id')->references('id')->on('authors')->onDelete('cascade');
+            $table->string('title');
             $table->double('list_price',8,2);
             $table->integer('stock_quantity');
-            $table->enum('author_origin', ['local', 'foreign'])->default('local');
             $table->boolean('is_available')->default(true);
             $table->timestamps();
         });

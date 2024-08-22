@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderItem;
-use http\Env\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -66,9 +65,6 @@ class OrderService
             }
         }
         try {
-
-
-        // Apply the best campaign
         $campaignResult = $this->campaignService->applyBestCampaign($orderItems, $totalAmount);
 
         $shippingCost = $campaignResult['discountedAmount'] > 50 ? 0 : 10;

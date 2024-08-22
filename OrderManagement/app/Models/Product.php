@@ -9,14 +9,17 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable=[
+        'title',
         'category_id',
-        'product_title',
-        'author',
+        'author_id',
         'list_price',
         'stock_quantity',
         'is_available'
     ];
     public function category(){
         return $this->belongsTo(Category::class,'category_id');
+    }
+    public function author(){
+        return $this->belongsTo(Author::class,'author_id');
     }
 }

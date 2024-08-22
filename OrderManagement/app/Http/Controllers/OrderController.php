@@ -7,7 +7,6 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Services\OrderService;
 use Exception;
-use http\Env\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,8 +59,7 @@ class OrderController extends Controller
     {
         try {
             $result = $this->orderService->createOrder($request->all());
-
-            // JSON dönüşümünde diziler kullanmadan doğrudan nesneyi döndürme
+            //dd($result);
             return response()->json($result['order'], 201);
 
         } catch (\Exception $e) {
@@ -78,7 +76,7 @@ class OrderController extends Controller
         if ($orders){
             foreach ($orders as $order){
                 foreach ($order->items as $order_items){
-                    $product = Product::where('id', $order_items->product_id)->pluck('product_title');
+                    $product = Product::where('id', $order_items->product_id)->pluck('title');
                     $order_items->product_title = $product['0'];
                 }
             }

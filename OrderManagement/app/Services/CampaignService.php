@@ -3,66 +3,57 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\Campaign;
+use Illuminate\Support\Collection;
 
 class CampaignService
 {
-    public function applyBestCampaign($orderItems, $totalAmount)
+    public function applyBestCampaign(Collection $orderItems, float $totalAmount): array
     {
         $bestDiscount = 0;
         $bestCampaign = '';
 
-        // Campaign 1: Buy 2 Get 1 Free for Sabahattin Ali's Roman books
-        $sabahattinAliBooks = Product::where('author', 'Sabahattin Ali')
-            ->whereHas('category', function ($query) {
-                $query->where('category_title', 'Roman');
-            })
-            ->pluck('id');
+        $campaigns = Campaign::all();
 
-        $eligibleItems = $orderItems->filter(function ($item) use ($sabahattinAliBooks) {
-            return $sabahattinAliBooks->contains($item['product_id']);
-        });
+        foreach ($campaigns as $campaign) {
+            switch ($campaign->type) {
+                case 'buy_one_get_one':
+                    $sabahattinAliBooks = Product::where('author_id', 3)
+                    ->where('category_id', $campaign->category_id)
+                        ->pluck('id');
 
-        $totalQuantity = $eligibleItems->sum('quantity');
-        $discountAmount = 0;
 
-        if ($totalQuantity >= 2) {
-            // Bedava kitap için en düşük fiyatlı ürünleri seçmek
-            $prices = $eligibleItems->sortBy('price')->pluck('price');
+                    $filteredItems = $orderItems->filter(function ($item) use ($sabahattinAliBooks) {
+                        return $sabahattinAliBooks->contains($item['product_id']);
+                    });
 
-            // Kampanya gereği sadece 1 bedava kitap olacağı için
-            $discountAmount = $prices->first(); // En düşük fiyatlı ürünü seç
+                    $totalQuantity = $filteredItems->sum('quantity');
+                    if ($totalQuantity >= 2) {
+                        $prices = $filteredItems->sortBy('price')->pluck('price');
+                        $discountAmount = $prices->first(); // Apply the discount on the lowest priced book
 
-            if ($discountAmount > $bestDiscount) {
-                $bestDiscount = $discountAmount;
-                $bestCampaign = '2 al, 1 bedava (Sabahattin Ali Roman)';
+                        if ($discountAmount > $bestDiscount) {
+                            $bestDiscount = $discountAmount;
+                            $bestCampaign = $campaign->title;
+                        }
+                    }
+                    break;
+
+                case 'discount':
+                    if ($totalAmount > $campaign->discount_threshold) {
+                        $discountAmount = $totalAmount * ($campaign->value / 100);
+                        if ($discountAmount > $bestDiscount) {
+                            $bestDiscount = $discountAmount;
+                            $bestCampaign = $campaign->title;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
 
-        // Campaign 2: 5% Discount for Orders Over 200 TL
-        if ($totalAmount > 200) {
-            $discountAmount = $totalAmount * 0.05;
-            if ($discountAmount > $bestDiscount) {
-                $bestDiscount = $discountAmount;
-                $bestCampaign = '5% Discount on Orders Over 200 TL';
-            }
-        }
-
-        // Campaign 3: 5% Discount for Local Authors
-        $localAuthorItems = $orderItems->filter(function ($item) {
-            return $item->product->author_origin === 'local';
-        });
-
-        $localAuthorAmount = $localAuthorItems->sum(function ($item) {
-            return $item->quantity * $item->price;
-        });
-
-        $discountAmount = $localAuthorAmount * 0.05;
-        if ($discountAmount > $bestDiscount) {
-            $bestDiscount = $discountAmount;
-            $bestCampaign = '5% Discount for Local Authors';
-        }
-
-        // Return the best discount and campaign name
         return [
             'discountedAmount' => $totalAmount - $bestDiscount,
             'discount' => $bestDiscount,
@@ -70,5 +61,3 @@ class CampaignService
         ];
     }
 }
-
-

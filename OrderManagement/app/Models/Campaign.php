@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Campaign extends Model
 {
     use HasFactory;
+
+    protected $table = 'campaigns';
+    protected $fillable = [
+        'name',
+        'type',
+        'value',
+        'discount_threshold',
+        'category_id',
+    ];
 }

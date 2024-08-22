@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Kampanya adı
-            $table->enum('type', ['discount', 'buy_one_get_one']); // Kampanya türü
-            $table->decimal('value', 8, 2)->nullable(); // İndirim yüzdesi veya miktarı
-            $table->decimal('discount_threshold', 8, 2)->nullable(); // İndirim için minimum alışveriş tutarı
-            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null'); // Kampanyanın geçerli olduğu kategori
+            $table->string('title');
+            $table->enum('type', ['discount', 'buy_one_get_one']);
+            $table->decimal('value', 8, 2)->nullable();
+            $table->decimal('discount_threshold', 8, 2)->nullable();
+            $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
+            $table->foreignId('author_id')->nullable()->constrained('authors')->onDelete('set null');
             $table->timestamps();
         });
 

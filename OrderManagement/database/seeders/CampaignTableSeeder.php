@@ -13,23 +13,31 @@ class CampaignTableSeeder extends Seeder
      */
     public function run(): void
     {
-        /*DB::table('campaigns')->insert([
+        DB::table('campaigns')->insert([
             [
-                'product_title' => 'İnce Memed',
+                'title' => '2 al, 1 bedava (Sabahattin Ali Roman)',
+                'type' => 'buy_one_get_one',
+                'value' => null,
+                'discount_threshold' => null,
                 'category_id' => 1,
-                'author' => 'Yaşar Kemal',
-                'author_origin'=> 'local',
-                'list_price' => 48.75,
-                'stock_quantity' => 10,
+                'author_id' => 3,
             ],
             [
-                'product_title' => 'İnce Memed',
-                'category_id' => 1,
-                'author' => 'Yaşar Kemal',
-                'author_origin'=> 'local',
-                'list_price' => 48.75,
-                'stock_quantity' => 10,
-            ]
-        ]);*/
+                'title' => '5% Discount on Orders Over 200 TL',
+                'type' => 'discount',
+                'value' => 5,
+                'discount_threshold' => 200,
+                'category_id' => null,
+                'author_id' => null,
+            ],
+            [
+                'title' => '5% Discount for Local Authors',
+                'type' => 'discount',
+                'value' => 5,
+                'discount_threshold' => null,
+                'category_id' => null,
+                'author_id' => 2,
+            ],
+        ]);
     }
 }

@@ -15,10 +15,10 @@ class CategoriesTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('categories')->insert([
-            ['category_title' => 'Roman'],
-            ['category_title' => 'Din'],
-            ['category_title' => 'Bilim'],
-            ['category_title' => 'Çocuk'],
+            ['title' => 'Roman'],
+            ['title' => 'Din'],
+            ['title' => 'Bilim'],
+            ['title' => 'Çocuk'],
         ]);
     }
 }
