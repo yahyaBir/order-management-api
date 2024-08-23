@@ -24,7 +24,7 @@ class CampaignTableSeeder extends Seeder
             ],
             [
                 'title' => '5% Discount on Orders Over 200 TL',
-                'type' => 'discount',
+                'type' => 'discount_for_amount',
                 'value' => 5,
                 'discount_threshold' => 200,
                 'category_id' => null,
@@ -32,7 +32,7 @@ class CampaignTableSeeder extends Seeder
             ],
             [
                 'title' => '5% Discount for Local Authors',
-                'type' => 'discount',
+                'type' => 'discount_for_item',
                 'value' => 5,
                 'discount_threshold' => null,
                 'category_id' => null,

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\CampaignService;
+use App\Services\OrderDetailService;
 use App\Services\OrderService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -20,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(CampaignService::class, function ($app) {
             return new CampaignService();
+        });
+        $this->app->singleton(OrderDetailService::class, function ($app) {
+            return new OrderDetailService();
         });
     }
 

@@ -31,11 +31,24 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed. Please check your input.',
+                'errors' => $validator->errors(),
+                'timestamp' => now()->toDateTimeString(),
+                'path' => $request->path(),
+            ], 422);
         }
-
-        if (! $token = auth()->attempt($validator->validated())) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (! $token = Auth::attempt($validator->validated())) {
+            return response()->json([
+                'status' => 'error',
+                'statusCode' => '401',
+                'message' => 'Incorrect email or password.',
+                'detail' => 'Ensure that the email and password included in the request are correct',
+                'error_code' => 'INVALID_CREDENTIALS',
+                'timestamp' => now()->toDateTimeString(),
+                'path' => $request->path(),
+            ], 401);
         }
 
         return $this->createNewToken($token);
@@ -54,7 +67,13 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed. Please check your input.',
+                'errors' => $validator->errors(),
+                'timestamp' => now()->toDateTimeString(),
+                'path' => $request->path(),
+            ], 422);
         }
 
         $user = User::create(array_merge(
@@ -63,8 +82,11 @@ class AuthController extends Controller
         ));
 
         return response()->json([
+            'status' => 'success',
             'message' => 'User successfully registered',
-            'user' => $user
+            'user' => $user,
+            'timestamp' => now()->toDateTimeString(),
+            'path' => $request->path(),
         ], 201);
     }
 
@@ -107,10 +129,11 @@ class AuthController extends Controller
      */
     protected function createNewToken($token){
         return response()->json([
+            'status' => 'success',
+            'message' => 'Login successful',
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }

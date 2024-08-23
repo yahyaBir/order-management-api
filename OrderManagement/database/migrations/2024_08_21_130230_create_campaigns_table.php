@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('campaigns', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->enum('type', ['discount', 'buy_one_get_one']);
+            $table->enum('type', ['discount_for_item','discount_for_amount','buy_one_get_one',]);
             $table->decimal('value', 8, 2)->nullable();
             $table->decimal('discount_threshold', 8, 2)->nullable();
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');

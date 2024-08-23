@@ -37,7 +37,8 @@ class OrderService
         $order->user_id = Auth::id();
         $order->save();
 
-        $totalAmount = 0;
+        $orderAmount = 0;
+        $discountedAmount = 0;
         $orderItems = collect();
 
         foreach ($orderData['order_items'] as $order_item) {
@@ -55,7 +56,7 @@ class OrderService
                 $items->price = $product->list_price;
                 $items->save();
 
-                $totalAmount += $items->quantity * $items->price;
+                $orderAmount += $items->quantity * $items->price;
                 $orderItems->push($items);
 
                 $product->stock_quantity -= $order_item['quantity'];
@@ -65,22 +66,32 @@ class OrderService
             }
         }
         try {
-        $campaignResult = $this->campaignService->applyBestCampaign($orderItems, $totalAmount);
+        $campaignResult = $this->campaignService->applyBestCampaign($orderItems, $orderAmount);
 
-        $shippingCost = $campaignResult['discountedAmount'] > 50 ? 0 : 10;
-        $totalAmount = $campaignResult['discountedAmount'] + $shippingCost + $order->discount_amount;
+        $initialAmount = $orderAmount;
+
+        $discountedAmount = $initialAmount - $campaignResult['discount'];
+
+        $discountAmount = $campaignResult['discount'];
+
+        $shippingCost = $discountedAmount > 50 ? 0 : 10;
+
+        $totalAmount = $discountedAmount + $shippingCost;
+
+
+        $order->order_amount = $orderAmount;
+        $order->discounted_amount = $discountAmount;
 
         $order->shipping_cost = $shippingCost;
-
-        $order->discounted_amount = $campaignResult['discountedAmount'];
-        $order->discount_amount = $campaignResult['discount'];
-        $totalAmount = $campaignResult['discountedAmount'] + $shippingCost + $order->discount_amount;
         $order->total_amount = $totalAmount;
         $order->applied_campaign = $campaignResult['appliedCampaign'];
         $order->save();
 
 
-        return ['status' => 'success', 'order' => $order];
+            return [
+                'status' => 'success',
+                'order' => $order,
+            ];
         }catch (\Exception $e){
             return response()->json($e,500);
         }

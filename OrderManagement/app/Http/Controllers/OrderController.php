@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Services\OrderDetailService;
 use App\Services\OrderService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -16,18 +17,26 @@ use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
 
+
+
     protected $orderService;
 
-    public function __construct(OrderService $orderService)
+    public function __construct(OrderService $orderService, OrderDetailService $orderDetailService)
     {
         $this->orderService = $orderService;
-    }
+        $this->orderDetailService = $orderDetailService;
+        $this->middleware('auth');
 
+        $this->middleware('is_admin', ['only' => ['store', 'update', 'destroy']]);
+
+    }
     public function index() {
-        $orders = Order::paginate(15);
+        $orders = Order::paginate(20);
         if ($orders->isNotEmpty()) {
             foreach ($orders->items() as $order) {
+                //dd($order);
                     $product = Product::find($order['product_id']);
+                    //dd($product);
                     $order->product_id = $product;
             }
             return response()->json($orders, 200);
@@ -37,52 +46,67 @@ class OrderController extends Controller
     }
     public function show($id)
     {
-            $order = Order::with('items')->find($id);
-        if (!$order){return response()->json('yanlıs girdinşz',400);}
-            return [
-                'orderId' => $order->id,
-                'totalAmount' => $order->total_amount,
-                'discountedAmount' => $order->discounted_amount,
-                'items' => $order->items->map(function($item) {
-                    return [
-                        'productId' => $item->product_id,
-                        'quantity' => $item->quantity,
-                    ];
-                }),
-                'shippingCost' => $order->shipping_cost,
-                'appliedCampaign' => $order->applied_campaign,
-                'status' => $order->status,
-            ];
+        try {
+            $orderDetail = $this->orderDetailService->getOrderDetail($id);
+
+            if (!$orderDetail) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Order not found',
+                ], 404);
+            }
+            $order = Order::find($id);
+
+                if (!$order || auth()->user()->id != $order->user_id) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Unauthorized',
+                    ], 401);
+                }
+
+            return response()->json($orderDetail, 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An unexpected error occurred: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
-    public function store(Request $request)
+    function store(Request $request)
     {
         try {
-            $result = $this->orderService->createOrder($request->all());
-            //dd($result);
-            return response()->json($result['order'], 201);
+            $order = DB::transaction(function () use ($request) {
+                return $this->orderService->createOrder($request->all());
+            });
+
+            return response()->json([
+                'order' => $order,
+            ], 201);
+
 
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+            ], 500);
         }
     }
+     public function destroy($id){
+         try {
+             $order = Order::findOrFail($id);
+             $order->delete();
 
-    public function user_orders($id){
-
-        $orders=Order::with('items')
-            ->where('user_id',$id)
-            ->get();
-
-        if ($orders){
-            foreach ($orders as $order){
-                foreach ($order->items as $order_items){
-                    $product = Product::where('id', $order_items->product_id)->pluck('title');
-                    $order_items->product_title = $product['0'];
-                }
-            }
-            return response()->json($orders);
-        }
-        else return response()->json('no orders found for this user');
-    }
+             return response()->json([
+                 'status' => 'success',
+                 'message' => "Product with ID {$id} successfully deleted"
+             ], 200);
+         } catch (ModelNotFoundException $e) {
+             return response()->json([
+                 'status' => 'error',
+                 'message' => "Product with ID {$id} not found.",
+             ], 404);
+         }
+     }
 }
 

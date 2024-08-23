@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
     public function index(){
-        $category= Category::paginate(10);
+        $category= Category::paginate(20);
         if ($category->isEmpty()) {
             return response()->json([
                 'status' => 'error',
@@ -21,15 +21,13 @@ class CategoryController extends Controller
         else return response()->json(['status' => 'success', $category], 200);
     }
 
-    public function show($id){
-        try {
-            $category = Category::findOrFail($id);
-            return response()->json(['status'=>'success',$category, 200]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['status' => 'error',
-                    'message' => "Category with ID {$id} not found.",
-                ], 404);
-        }
+    public function show($id)
+    {
+        $category = Category::findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'category' => $category
+        ], 200);
     }
 
     public function store(Request $request){
@@ -69,7 +67,7 @@ class CategoryController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'title' => 'required|unique:categories,title'
+                    'title' => 'required|unique:categories,title'
             ]);
 
             if ($validator->fails()) {
@@ -79,9 +77,8 @@ class CategoryController extends Controller
                     'errors' => $validator->errors()
                 ], 400);
             }
-
             $category = Category::findOrFail($id);
-            $category->fill($request->only('title'));
+            $category->title = $request->input('title');
             $category->save();
 
             return response()->json([
@@ -101,6 +98,7 @@ class CategoryController extends Controller
             ], 500);
         }
     }
+
 
     public function destroy($id)
     {
