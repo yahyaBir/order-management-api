@@ -6,6 +6,7 @@ use App\Models\Product;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -62,20 +63,32 @@ class ProductController extends Controller
             ], 400);
         }
 
-        $product = new Product();
-        $product->title = $request->title;
-        $product->list_price = $request->list_price;
-        $product->category_id = $request->category_id;
-        $product->author_id = $request->author_id;
-        $product->stock_quantity = $request->stock_quantity;
+        try {
+            $product = DB::transaction(function () use ($request) {
+                $product = new Product();
+                $product->title = $request->title;
+                $product->list_price = $request->list_price;
+                $product->category_id = $request->category_id;
+                $product->author_id = $request->author_id;
+                $product->stock_quantity = $request->stock_quantity;
 
-        $product->save();
+                $product->save();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Product successfully created',
-            'data' => $product
-        ], 201);
+                return $product;
+            });
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product successfully created',
+                'data' => $product
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function update($id, Request $request)
