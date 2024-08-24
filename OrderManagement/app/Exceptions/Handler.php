@@ -57,11 +57,16 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
-                $route = $request->path();
+                $route = $request->path(); // İsteğin yapıldığı yol
+                $method = $request->method(); // İstek metodu (GET, POST, vb.)
+                $timestamp = now(); // Şu anki zaman damgası
 
                 return response()->json([
+                    'status' => 'error',
                     'message' => "The requested resource at '{$route}' was not found.",
-                    'error' => 'Not Found'
+                    'error' => 'Not Found',
+                    'method' => $method,
+                    'timestamp' => $timestamp,
                 ], 404);
             }
         });

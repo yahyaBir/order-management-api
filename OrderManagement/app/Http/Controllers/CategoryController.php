@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_admin')->only(['store','update','destroy']);
+    }
     public function index(){
         $category= Category::paginate(20);
         if ($category->isEmpty()) {
@@ -34,7 +39,6 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|unique:categories,title'
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
@@ -42,7 +46,6 @@ class CategoryController extends Controller
                 'errors' => $validator->errors()
             ], 400);
         }
-
         try {
             $category = new Category();
             $category->title = $request->title;
@@ -69,7 +72,6 @@ class CategoryController extends Controller
             $validator = Validator::make($request->all(), [
                     'title' => 'required|unique:categories,title'
             ]);
-
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 'error',
@@ -86,11 +88,6 @@ class CategoryController extends Controller
                 'message' => 'Category updated successfully',
                 'data' => $category
             ], 200);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => "Category with ID {$id} not found."
-            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -99,21 +96,13 @@ class CategoryController extends Controller
         }
     }
 
-
     public function destroy($id)
     {
-        try {
-            $category = Category::findOrFail($id);
-            $category->delete();
-            return response()->json([
-                'status' => 'success',
-                'message' => "Category with ID {$id} successfully deleted"
-            ], 200);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => "Category with ID {$id} not found."
-            ], 404);
-        }
+        $category = Category::findOrFail($id);
+        $category->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => "Category with ID {$id} successfully deleted"
+        ], 200);
     }
 }

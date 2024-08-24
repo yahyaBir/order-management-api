@@ -26,6 +26,10 @@ class AdminMiddleware
         if (Auth::user()->is_admin== 1){
             return $next($request);
         }
-        else return response()->json('you are not an admin');
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Access denied. You do not have the necessary permissions to access this resource.',
+            'error_code' => 'FORBIDDEN_ACCESS'
+        ], 403);
     }
 }

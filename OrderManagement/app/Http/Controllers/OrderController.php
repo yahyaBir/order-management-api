@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -26,24 +27,23 @@ class OrderController extends Controller
         $this->orderService = $orderService;
         $this->orderDetailService = $orderDetailService;
         $this->middleware('auth');
-
-        $this->middleware('is_admin', ['only' => ['store', 'update', 'destroy']]);
-
+        $this->middleware('is_admin', ['only' => ['destroy']]);
     }
     public function index() {
-        $orders = Order::paginate(20);
-        if ($orders->isNotEmpty()) {
-            foreach ($orders->items() as $order) {
-                //dd($order);
-                    $product = Product::find($order['product_id']);
-                    //dd($product);
-                    $order->product_id = $product;
-            }
-            return response()->json($orders, 200);
+        $user = auth()->user();
+
+        if ($user->is_admin == 1) {
+            $orders = Order::paginate(20);
         } else {
-            return response()->json('There are no new orders');
+            $orders = Order::where('user_id', $user->id)->paginate(20);
         }
+        return response()->json([
+            'status' => 'success',
+            'message' => $orders->isEmpty() ? 'No orders found.' : 'Orders retrieved successfully.',
+            'data' => $orders->isEmpty() ? [] : OrderResource::collection($orders),
+        ], 200);
     }
+
     public function show($id)
     {
         try {
@@ -52,26 +52,33 @@ class OrderController extends Controller
             if (!$orderDetail) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Order not found',
+                    'message' => 'The requested order could not be found.',
                 ], 404);
             }
             $order = Order::find($id);
 
-                if (!$order || auth()->user()->id != $order->user_id) {
-                    return response()->json([
-                        'status' => 'error',
-                        'message' => 'Unauthorized',
-                    ], 401);
-                }
-
+            if (!$order) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Order not found.',
+                ], 404);
+            }
+            if (auth()->user()->is_admin === 0 && auth()->user()->id !== $order->user_id) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Unauthorized to access this order.',
+                ], 403);
+            }
             return response()->json($orderDetail, 200);
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'An unexpected error occurred: ' . $e->getMessage()
+                'message' => 'An unexpected error occurred: ' . $e->getMessage(),
+                'timestamp' => now()->toDateTimeString(),
             ], 500);
         }
     }
+
 
     function store(Request $request)
     {
@@ -79,12 +86,9 @@ class OrderController extends Controller
             $order = DB::transaction(function () use ($request) {
                 return $this->orderService->createOrder($request->all());
             });
-
             return response()->json([
                 'order' => $order,
             ], 201);
-
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',

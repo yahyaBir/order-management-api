@@ -32,13 +32,11 @@ class OrderService
                 'errors' => $validator->errors()
             ];
         }
-
         $order = new Order();
         $order->user_id = Auth::id();
         $order->save();
 
         $orderAmount = 0;
-        $discountedAmount = 0;
         $orderItems = collect();
 
         foreach ($orderData['order_items'] as $order_item) {
@@ -47,7 +45,6 @@ class OrderService
             if (!$product) {
                 return ['status' => 'error', 'message' => 'Product not found'];
             }
-
             if ($product->stock_quantity >= $order_item['quantity']) {
                 $items = new OrderItem();
                 $items->order_id = $order->id;
@@ -67,27 +64,18 @@ class OrderService
         }
         try {
         $campaignResult = $this->campaignService->applyBestCampaign($orderItems, $orderAmount);
-
         $initialAmount = $orderAmount;
-
         $discountedAmount = $initialAmount - $campaignResult['discount'];
-
         $discountAmount = $campaignResult['discount'];
-
         $shippingCost = $discountedAmount > 50 ? 0 : 10;
-
         $totalAmount = $discountedAmount + $shippingCost;
-
 
         $order->order_amount = $orderAmount;
         $order->discounted_amount = $discountAmount;
-
         $order->shipping_cost = $shippingCost;
         $order->total_amount = $totalAmount;
         $order->applied_campaign = $campaignResult['appliedCampaign'];
         $order->save();
-
-
             return [
                 'status' => 'success',
                 'order' => $order,

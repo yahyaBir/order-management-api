@@ -29,7 +29,4 @@ Route::apiResource('orders', OrderController::class);
 
 Route::apiResource('authors', AuthorController::class);
 
-Route::controller(CampaignController::class)->group(function (){
-    Route::get('/campaigns','index');
-});
 

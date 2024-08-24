@@ -11,9 +11,14 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('is_admin')->only(['store','update','destroy']);
+    }
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::paginate(20);
 
         if ($products->isEmpty()) {
             return response()->json([
@@ -21,7 +26,6 @@ class ProductController extends Controller
                 'message' => 'No products found in the current page of results.',
             ], 404);
         }
-
         return response()->json([
             'status' => 'success',
             'data' => $products
