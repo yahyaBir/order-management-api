@@ -53,7 +53,6 @@ URL Params:
 Yok
 
 Data Params:
-
 ```json
 {
   "email": "string (zorunlu)",
@@ -64,6 +63,7 @@ Data Params:
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "message": "Giriş başarılı",
@@ -71,10 +71,11 @@ Kod: 200 OK
   "token_type": "bearer",
   "expires_in": 3600
 }
-
+```
 Hata Yanıtı:
 Kod: 401 Unauthorized
 İçerik:
+```json
 {
   "status": "error",
   "message": "E-posta veya şifre hatalı.",
@@ -83,10 +84,12 @@ Kod: 401 Unauthorized
   "timestamp": "2024-08-25T14:30:00",
   "path": "/api/v1/login"
 }
+```
 OR
 
 Kod: 422 Unprocessable Entity
 İçerik:
+```json
 {
   "status": "error",
   "message": "Doğrulama başarısız. Lütfen giriş bilgilerinizi kontrol edin.",
@@ -97,6 +100,7 @@ Kod: 422 Unprocessable Entity
   "timestamp": "2024-08-25T14:30:00",
   "path": "/api/v1/login"
 }
+```
 
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/login" \
@@ -119,15 +123,18 @@ URL Params:
 Yok
 
 Data Params:
+```json
 {
   "name": "string (zorunlu)",
   "email": "string (zorunlu)",
   "password": "string (zorunlu)"
 }
+```
 
 Başarı Yanıtı:
 Kod: 201 Created
 İçerik:
+```json
 {
   "status": "success",
   "message": "Kullanıcı başarıyla kaydedildi",
@@ -138,10 +145,12 @@ Kod: 201 Created
   },
   "timestamp": "2024-08-25T14:30:00"
 }
+```
 
 Hata Yanıtı:
 Kod: 422 Unprocessable Entity
 İçerik:
+```json
 {
   "status": "error",
   "message": "Doğrulama başarısız. Lütfen giriş bilgilerinizi kontrol edin.",
@@ -153,6 +162,7 @@ Kod: 422 Unprocessable Entity
   "timestamp": "2024-08-25T14:30:00",
   "path": "/api/v1/register"
 }
+```
 
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/register" \
@@ -179,6 +189,7 @@ Yok
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "message": "Kullanıcı başarıyla çıkış yaptı.",
@@ -188,6 +199,7 @@ Kod: 200 OK
   },
   "timestamp": "2024-08-25T14:30:00"
 }
+```
 
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/logout" \
@@ -213,6 +225,7 @@ Yok
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "message": "Giriş başarılı",
@@ -220,6 +233,7 @@ Kod: 200 OK
   "token_type": "bearer",
   "expires_in": 3600
 }
+```
 
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/refresh" \
@@ -245,11 +259,13 @@ Yok
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "id": 1,
   "name": "John Doe",
   "email": "john.doe@example.com"
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/user" \
@@ -279,6 +295,7 @@ Yok
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "data": [
@@ -291,15 +308,18 @@ Kod: 200 OK
         "title": "Category 2",
       }
   ]
-}      
+}
+```      
 
 Hata Yanıtı:
 Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "No categories found in the current page of results."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/categories"
@@ -323,6 +343,7 @@ Yok
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "category": {
@@ -330,14 +351,17 @@ Kod: 200 OK
     "title": "Category 1",
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "Category not found."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/categories/1"
@@ -363,6 +387,7 @@ Data Params:
 Başarı Yanıtı:
 Kod: 201 Created
 İçerik:
+```json
 {
   "status": "success",
   "message": "Category successfully created",
@@ -371,10 +396,12 @@ Kod: 201 Created
     "title": "New Category",
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 400 Bad Request
 İçerik:
+```json
 {
   "status": "error",
   "message": "Validation failed",
@@ -382,6 +409,7 @@ Kod: 400 Bad Request
     "title": ["The title field is required."]
   }
 }
+```
 
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/categories" \
@@ -403,14 +431,17 @@ URL Params:
 Required:id=[integer]
 
 Data Params:
+```json
 json
 {
   "title": "string (zorunlu)"
 }
+```
 
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```
 {
   "status": "success",
   "message": "Category updated successfully",
@@ -421,10 +452,12 @@ Kod: 200 OK
     "updated_at": "2024-08-25T14:30:00"
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 400 Bad Request
 İçerik:
+```json
 {
   "status": "error",
   "message": "Validation failed",
@@ -432,15 +465,18 @@ Kod: 400 Bad Request
     "title": ["The title field is required."]
   }
 }
+```
 
 OR
 
 Kod: 500 Internal Server Error
+```json
 İçerik:
 {
   "status": "error",
   "message": "An unexpected error occurred: {error_message}"
 }
+```
 
 Örnek Çağrı:
 curl -X PUT "http://127.0.0.1:8000/api/v1/categories/1" \
@@ -467,10 +503,12 @@ Başarı Yanıtı:
 Kod: 200 OK
 
 İçerik:
+```json
 {
   "status": "success",
   "message": "Category with ID {id} successfully deleted"
 }
+```
 
 Örnek Çağrı:
 curl -X DELETE "http://127.0.0.1:8000/api/v1/categories/1"
@@ -500,6 +538,7 @@ Yok
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "authors": {
@@ -519,14 +558,17 @@ Kod: 200 OK
     ...
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "No authors found in the current page of results."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/authors"
@@ -551,6 +593,7 @@ Başarı Yanıtı:
 Kod: 200 OK
 
 İçerik:
+```json
 {
   "status": "success",
   "author": {
@@ -561,14 +604,17 @@ Kod: 200 OK
     "updated_at": "2024-08-25T14:30:00"
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "Author with ID {id} not found."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/authors/1"
@@ -587,14 +633,17 @@ URL Params:
 Yok
 
 Data Params:
+```json
 {
   "name": "string (zorunlu)",
   "author_origin": "string (zorunlu, 'local' veya 'foreign')"
 }
+```
 
 Başarı Yanıtı:
 Kod: 201 Created
 İçerik:
+```json
 {
   "status": "success",
   "message": "Author successfully created",
@@ -606,10 +655,12 @@ Kod: 201 Created
     "updated_at": "2024-08-25T14:30:00"
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 400 Bad Request
 İçerik:
+```json
 {
   "status": "error",
   "message": "Validation failed",
@@ -618,6 +669,7 @@ Kod: 400 Bad Request
     "author_origin": ["The author origin field is required."]
   }
 }
+```
 
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/authors" \
@@ -639,14 +691,17 @@ URL Params:
 Required:id=[integer]
 
 Data Params:
+```json
 {
   "name": "string (isteğe bağlı)",
   "author_origin": "string (isteğe bağlı, 'local' veya 'foreign')"
 }
+```
 
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "message": "Author updated successfully",
@@ -658,10 +713,12 @@ Kod: 200 OK
     "updated_at": "2024-08-25T14:30:00"
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 400 Bad Request
 İçerik:
+```json
 {
   "status": "error",
   "message": "Validation failed",
@@ -670,16 +727,18 @@ Kod: 400 Bad Request
     "author_origin": ["The author origin field is invalid."]
   }
 }
+```
 
 OR
 
 Kod: 500 Internal Server Error
 İçerik:
+```json
 {
   "status": "error",
   "message": "An unexpected error occurred: {error_message}"
 }
-
+```
 Örnek Çağrı:
 curl -X PUT "http://127.0.0.1:8000/api/v1/authors/1" \
      -H "Content-Type: application/json" \
@@ -705,10 +764,12 @@ Yok
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "message": "Author with ID {id} successfully deleted"
 }
+```
 
 Örnek Çağrı:
 curl -X DELETE "http://127.0.0.1:8000/api/v1/authors/1"
@@ -740,6 +801,7 @@ Başarı Yanıtı:
 Kod: 200 OK
 
 İçerik:
+```json
 {
   "status": "success",
   "data": {
@@ -762,6 +824,7 @@ Kod: 200 OK
     ...
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 404 Not Found
@@ -795,6 +858,7 @@ Başarı Yanıtı:
 Kod: 200 OK
 
 İçerik:
+```json
 {
   "status": "success",
   "data": {
@@ -808,14 +872,17 @@ Kod: 200 OK
     "updated_at": "2024-08-25T14:30:00"
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "Product with ID {id} not found."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/products/1"
@@ -834,6 +901,7 @@ URL Params:
 Yok
 
 Data Params:
+```json
 {
   "title": "string (zorunlu)",
   "list_price": "numeric (zorunlu)",
@@ -841,10 +909,12 @@ Data Params:
   "author_id": "numeric (zorunlu, authors tablosunda mevcut olmalı)",
   "stock_quantity": "numeric (zorunlu)"
 }
+```
 
 Başarı Yanıtı:
 Kod: 201 Created
 İçerik:
+```json
 {
   "status": "success",
   "message": "Product successfully created",
@@ -859,10 +929,12 @@ Kod: 201 Created
     "updated_at": "2024-08-25T14:30:00"
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 400 Bad Request
 İçerik:
+```json
 {
   "status": "error",
   "message": "Validation failed",
@@ -874,15 +946,18 @@ Kod: 400 Bad Request
     "stock_quantity": ["The stock quantity field is required."]
   }
 }
+```
 OR
 
 Kod: 500 Internal Server Error
 
 İçerik:
+```json
 {
   "status": "error",
   "message": "An unexpected error occurred: {error_message}"
 }
+```
 
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/products" \
@@ -904,6 +979,7 @@ URL Params:
 Required:id=[integer]
 
 Data Params:
+```json
 {
   "title": "string (isteğe bağlı)",
   "list_price": "numeric (isteğe bağlı)",
@@ -911,10 +987,12 @@ Data Params:
   "author_id": "numeric (isteğe bağlı, authors tablosunda mevcut olmalı)",
   "stock_quantity": "numeric (isteğe bağlı)"
 }
+```
 
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "message": "Product updated successfully",
@@ -929,10 +1007,12 @@ Kod: 200 OK
     "updated_at": "2024-08-25T14:30:00"
   }
 }
+```
 
 Hata Yanıtı:
 Kod: 400 Bad Request
 İçerik:
+```json
 {
   "status": "error",
   "message": "Validation failed",
@@ -944,15 +1024,18 @@ Kod: 400 Bad Request
     "stock_quantity": ["The stock quantity field is invalid."]
   }
 }
+```
 OR
 
 Kod: 500 Internal Server Error
 
 İçerik:
+```json
 {
   "status": "error",
   "message": "An unexpected error occurred: {error_message}"
 }
+```
 
 Örnek Çağrı:
 curl -X PUT "http://127.0.0.1:8000/api/v1/products/1" \
@@ -979,17 +1062,21 @@ Yok
 Başarı Yanıtı:
 Kod: 200 OK
 İçerik:
+```json
 {
   "status": "success",
   "message": "Product with ID {id} successfully deleted"
 }
+```
 Hata Yanıtı:
 Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "Product with ID {id} not found."
 }
+```
 
 Örnek Çağrı:
 curl -X DELETE "http://127.0.0.1:8000/api/v1/products/1"
@@ -998,7 +1085,6 @@ Notlar:
 Ürün mevcut değilse, 404 hatası döner.
 
 
-///////////////////////////////////////////////////////////////////////////
 
   # OrderController API
 OrderController, sipariş yönetimi için API uç noktaları sağlar. Bu uç noktalar siparişlerin listelenmesini, görüntülenmesini, oluşturulmasını ve silinmesini sağlar.
@@ -1015,6 +1101,7 @@ Data Params: Yok
 Başarı Yanıtı: Kod: 200 OK
 
 İçerik:
+```json
 {
   "status": "success",
   "message": "Orders retrieved successfully.",
@@ -1043,13 +1130,16 @@ Başarı Yanıtı: Kod: 200 OK
     ...
   }
 }
+```
 
 Hata Yanıtı: Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "No orders found."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/orders"
@@ -1067,6 +1157,7 @@ Data Params: Yok
 Başarı Yanıtı: Kod: 200 OK
 
 İçerik:
+```json
 {
   "status": "success",
   "data": {
@@ -1090,13 +1181,16 @@ Başarı Yanıtı: Kod: 200 OK
     "status": "pending"
   }
 }
+```
 
 Hata Yanıtı: Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "The requested order could not be found."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/orders/1"
@@ -1110,6 +1204,7 @@ Method: POST
 URL Params: Yok
 
 Data Params:
+```json
 {
   "order_items": [
     {
@@ -1118,9 +1213,11 @@ Data Params:
     }
   ]
 }
+```
 
 Başarı Yanıtı: Kod: 201 Created
 İçerik:
+```json
 {
   "status": "success",
   "order": {
@@ -1140,9 +1237,11 @@ Başarı Yanıtı: Kod: 201 Created
     "status": "pending"
   }
 }
+```
 
 Hata Yanıtı: Kod: 400 Bad Request
 İçerik:
+```json
 {
   "status": "error",
   "message": "Validation failed",
@@ -1152,15 +1251,18 @@ Hata Yanıtı: Kod: 400 Bad Request
     "order_items.*.quantity": ["The quantity field is required."]
   }
 }
+```
 
 OR
 
 Kod: 500 Internal Server Error
 İçerik:
+```json
 {
   "status": "error",
   "message": "An unexpected error occurred: {error_message}"
 }
+```
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/orders" \
      -H "Content-Type: application/json" \
@@ -1179,17 +1281,21 @@ Data Params: Yok
 Başarı Yanıtı: Kod: 200 OK
 
 İçerik:
+```json
 {
   "status": "success",
   "message": "Order with ID {id} successfully deleted"
 }
+```
 Hata Yanıtı: Kod: 404 Not Found
 
 İçerik:
+```json
 {
   "status": "error",
   "message": "Order with ID {id} not found."
 }
+```
 
 Örnek Çağrı:
 curl -X DELETE "http://127.0.0.1:8000/api/v1/orders/1"
@@ -1212,6 +1318,7 @@ Data Params: Yok
 Başarı Yanıtı: Kod: 200 OK
 
 İçerik:
+```json
 {
   "status": "success",
   "data": [
@@ -1222,13 +1329,16 @@ Başarı Yanıtı: Kod: 200 OK
   ],
   "total": 10
 }
+```
 
 Hata Yanıtı: Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "Bulunan sonuç sayfasında kampanya bulunamadı."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/campaigns"
@@ -1242,6 +1352,7 @@ Method: POST
 URL Params: Yok
 
 Data Params:
+```json
 {
   "title": "Kampanya Başlığı",
   "type": "discount_for_author_origin",
@@ -1251,9 +1362,11 @@ Data Params:
   "author_id": 1,
   "author_origin_for_campaign": "local"
 }
+```
 
 Başarı Yanıtı: Kod: 201 Created
 İçerik:
+```json
 {
   "status": "success",
   "message": "Campaign created successfully.",
@@ -1268,9 +1381,11 @@ Başarı Yanıtı: Kod: 201 Created
     "author_origin_for_campaign": "local"
   }
 }
+```
 
 Hata Yanıtı: Kod: 400 Bad Request
 İçerik:
+```json
 {
   "status": "error",
   "message": "Validation failed",
@@ -1284,15 +1399,18 @@ Hata Yanıtı: Kod: 400 Bad Request
     "author_origin_for_campaign": ["The selected author_origin_for_campaign is invalid."]
   }
 }
+```
 
 OR
 
 Kod: 500 Internal Server Error
 İçerik:
+```json
 {
   "status": "error",
   "message": "An unexpected error occurred: {error_message}"
 }
+```
 
 Örnek Çağrı:
 curl -X POST "http://127.0.0.1:8000/api/v1/campaigns" \
@@ -1312,11 +1430,13 @@ $orderItems: Sipariş öğeleri koleksiyonu (Collection).
 $orderAmount: Sipariş toplam miktarı (float).
 
 Dönüş Değeri:
+```json
 {
   "discountedAmount": 190.00,
   "discount": 10.00,
   "appliedCampaign": "Discount for amount"
 }
+```
 
 ## Açıklama:
 discountedAmount: Uygulanan kampanya sonrası indirimli sipariş tutarı.
@@ -1329,6 +1449,7 @@ Parametreler:
 $validatedData: Kampanya oluşturma için doğrulanmış veri (array).
 
 Dönüş Değeri:
+```json
 {
   "id": 1,
   "title": "Kampanya Başlığı",
@@ -1339,5 +1460,4 @@ Dönüş Değeri:
   "author_id": 1,
   "author_origin_for_campaign": "local"
 }
-
-Açıklama: Oluşturulan kampanyanın tüm bilgileri.
+```
