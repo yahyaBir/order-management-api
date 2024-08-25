@@ -11,12 +11,15 @@ class Campaign extends Model
 
     protected $table = 'campaigns';
     protected $fillable = [
-        'name',
+        'title',
         'type',
         'value',
         'discount_threshold',
         'category_id',
+        'author_id',
+        'author_origin_for_campaign',
     ];
+
     protected $hidden = [
         'created_at',
         'updated_at',

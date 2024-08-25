@@ -1,0 +1,575 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost'
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: ''
+      operationId: postApiV1AuthLogin
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: hmaggio@example.org
+                password:
+                  type: string
+                  description: 'Must be at least 6 characters.'
+                  example: b3oOO6zr)yZs-
+              required:
+                - email
+                - password
+      security: []
+  /api/v1/auth/register:
+    post:
+      summary: ''
+      operationId: postApiV1AuthRegister
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must be between 2 and 100 characters.'
+                  example: hrp
+                email:
+                  type: string
+                  description: 'Must be a valid email address. Must not be greater than 100 characters.'
+                  example: ward58@example.org
+                password:
+                  type: string
+                  description: 'Must be at least 6 characters.'
+                  example: '(n|LoQUQD<*J'
+              required:
+                - name
+                - email
+                - password
+      security: []
+  /api/v1/auth/logout:
+    post:
+      summary: ''
+      operationId: postApiV1AuthLogout
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/auth/token/refresh:
+    post:
+      summary: ''
+      operationId: postApiV1AuthTokenRefresh
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/auth/user:
+    get:
+      summary: ''
+      operationId: getApiV1AuthUser
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /api/v1/categories:
+    get:
+      summary: ''
+      operationId: getApiV1Categories
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Categories
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: ''
+                  example: eius
+              required:
+                - title
+      security: []
+  '/api/v1/categories/{id}':
+    get:
+      summary: ''
+      operationId: getApiV1CategoriesId
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: ''
+      operationId: putApiV1CategoriesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1CategoriesId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the category.'
+        example: reiciendis
+        required: true
+        schema:
+          type: string
+  /api/v1/products:
+    get:
+      summary: ''
+      operationId: getApiV1Products
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Products
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: ''
+                  example: qui
+                list_price:
+                  type: number
+                  description: ''
+                  example: 4199.324
+                category_id:
+                  type: number
+                  description: ''
+                  example: 37.936
+                author_id:
+                  type: number
+                  description: ''
+                  example: 50068915.563639
+                stock_quantity:
+                  type: number
+                  description: ''
+                  example: 33.3286643
+              required:
+                - title
+                - list_price
+                - category_id
+                - author_id
+                - stock_quantity
+      security: []
+  '/api/v1/products/{id}':
+    get:
+      summary: ''
+      operationId: getApiV1ProductsId
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: ''
+      operationId: putApiV1ProductsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1ProductsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the product.'
+        example: molestiae
+        required: true
+        schema:
+          type: string
+  /api/v1/orders:
+    get:
+      summary: ''
+      operationId: getApiV1Orders
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Orders
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+  '/api/v1/orders/{id}':
+    get:
+      summary: ''
+      operationId: getApiV1OrdersId
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1OrdersId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the order.'
+        example: blanditiis
+        required: true
+        schema:
+          type: string
+  /api/v1/authors:
+    get:
+      summary: ''
+      operationId: getApiV1Authors
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    post:
+      summary: ''
+      operationId: postApiV1Authors
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: ut
+                author_origin:
+                  type: string
+                  description: ''
+                  example: foreign
+                  enum:
+                    - local
+                    - foreign
+              required:
+                - name
+                - author_origin
+      security: []
+  '/api/v1/authors/{id}':
+    get:
+      summary: ''
+      operationId: getApiV1AuthorsId
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+    put:
+      summary: ''
+      operationId: putApiV1AuthorsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: null
+                author_origin:
+                  type: string
+                  description: ''
+                  example: foreign
+                  enum:
+                    - local
+                    - foreign
+      security: []
+    delete:
+      summary: ''
+      operationId: deleteApiV1AuthorsId
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Endpoints
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the author.'
+        example: minima
+        required: true
+        schema:
+          type: string
+  /api/v1/campaigns:
+    get:
+      summary: ''
+      operationId: getApiV1Campaigns
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  data:
+                    -
+                      title: 'Buy 2, Get 1 Free (Sabahattin Ali Roman)'
+                      type: buy_one_get_one
+                    -
+                      title: 'Buy 3, Get 1 Free in Selected Categories'
+                      type: buy_three_get_one
+                    -
+                      title: '5% Discount on Orders Over 200 TL'
+                      type: discount_for_amount
+                    -
+                      title: '5% Discount for Local Authors'
+                      type: discount_for_item
+                  total: 4
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: 'Buy 2, Get 1 Free (Sabahattin Ali Roman)'
+                        type: buy_one_get_one
+                      -
+                        title: 'Buy 3, Get 1 Free in Selected Categories'
+                        type: buy_three_get_one
+                      -
+                        title: '5% Discount on Orders Over 200 TL'
+                        type: discount_for_amount
+                      -
+                        title: '5% Discount for Local Authors'
+                        type: discount_for_item
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: 'Buy 2, Get 1 Free (Sabahattin Ali Roman)'
+                        type:
+                          type: string
+                          example: buy_one_get_one
+                  total:
+                    type: integer
+                    example: 4
+      tags:
+        - Endpoints
+      security: []
+tags:
+  -
+    name: Endpoints
+    description: ''

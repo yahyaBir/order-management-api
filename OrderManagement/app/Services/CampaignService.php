@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Models\Campaign;
-use http\Exception;
 use Illuminate\Support\Collection;
 
 class CampaignService
@@ -19,13 +18,14 @@ class CampaignService
 
         foreach ($campaigns as $campaign) {
             switch ($campaign->type) {
-                case 'buy_one_get_one':
-                    $sabahattinAliBooks = Product::where('author_id', 3)
+                case 'b2g1_author_cat':
+                    // 'buy_two_get_one_author_categories' kampanya türü için
+                    $selectedBooks = Product::where('author_id', $campaign->author_id)
                         ->where('category_id', $campaign->category_id)
                         ->pluck('id');
 
-                    $filteredItems = $orderItems->filter(function ($item) use ($sabahattinAliBooks) {
-                        return $sabahattinAliBooks->contains($item->product_id);
+                    $filteredItems = $orderItems->filter(function ($item) use ($selectedBooks) {
+                        return $selectedBooks->contains($item->product_id);
                     });
 
                     $totalQuantity = $filteredItems->sum('quantity');
@@ -41,7 +41,7 @@ class CampaignService
                     }
                     break;
 
-                case 'buy_three_get_one':
+                case 'b3g1_selected_cat':
                     $filteredItems = $orderItems->filter(function ($item) use ($campaign) {
                         return $item->product->category_id == $campaign->category_id;
                     });
@@ -59,13 +59,18 @@ class CampaignService
                     }
                     break;
 
-                case 'discount_for_item':
-                    $allLocalAuthors = $orderItems->every(function ($item) {
-                        return $item->product->author->author_origin === 'local';
+                case 'discount_for_author_origin':
+                    // Kampanya için belirlenen author_origin
+                    $authorOriginForCampaign = $campaign->author_origin_for_campaign;
+
+                    // Order ile ilişkilendirilmiş ürünlerin yazar origin kontrolü
+                    $allMatchingAuthors = $orderItems->every(function ($item) use ($authorOriginForCampaign) {
+                        return $item->product->author->author_origin === $authorOriginForCampaign;
                     });
 
-                    if ($allLocalAuthors && $campaign->value == 5 && $campaign->discount_thresold == null) {
-                        $discountAmount = $orderAmount * 0.05;
+                    // Eğer tüm ürünler belirtilen author origin'e sahipse
+                    if ($allMatchingAuthors && $campaign->discount_threshold == null) {
+                        $discountAmount = $orderAmount * ($campaign->value / 100); // Örneğin %5 indirim
                         if ($discountAmount > $bestDiscount) {
                             $bestDiscount = $discountAmount;
                             $bestCampaign = $campaign->title;
@@ -73,24 +78,53 @@ class CampaignService
                         }
                     }
                     break;
+
                 case 'discount_for_amount':
-                    if ($orderAmount >= 200) {
-                        $discountAmount = $orderAmount * ($campaign->value / 100);
-                        if ($discountAmount > $bestDiscount) {
-                            $bestDiscount = $discountAmount;
-                            $bestCampaign = $campaign->title;
-                            $appliedCampaign = true;
+                    // Sadece 'discount_for_amount' kampanya türüne sahip kampanyaların eşik değerini al
+                    $thresholdCampaigns = $campaigns->filter(function ($campaign) {
+                        return $campaign->type === 'discount_for_amount';
+                    });
+
+                    foreach ($thresholdCampaigns as $thresholdCampaign) {
+                        $discountThreshold = $thresholdCampaign->discount_threshold;
+
+                        if ($orderAmount >= $discountThreshold) {
+                            $discountAmount = $orderAmount * ($thresholdCampaign->value / 100);
+
+                            if ($discountAmount > $bestDiscount) {
+                                $bestDiscount = $discountAmount;
+                                $bestCampaign = $thresholdCampaign->title;
+                                $appliedCampaign = true;
+                            }
                         }
                     }
                     break;
+
                 default:
                     break;
             }
         }
+
         return [
             'discountedAmount' => $appliedCampaign ? $orderAmount - $bestDiscount : $orderAmount,
             'discount' => $appliedCampaign ? $bestDiscount : 0,
             'appliedCampaign' => $bestCampaign,
         ];
+    }
+
+    public function createCampaign(array $validatedData)
+    {
+        // Yeni kampanyayı oluştur
+        $campaign = new Campaign();
+        $campaign->title = $validatedData['title'];
+        $campaign->type = $validatedData['type'];
+        $campaign->value = $validatedData['value'] ?? null;
+        $campaign->discount_threshold = $validatedData['discount_threshold'] ?? null;
+        $campaign->category_id = $validatedData['category_id'] ?? null;
+        $campaign->author_id = $validatedData['author_id'] ?? null;
+        $campaign->author_origin_for_campaign = $validatedData['author_origin_for_campaign'] ?? null;
+        $campaign->save();
+
+        return $campaign;
     }
 }
