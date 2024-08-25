@@ -53,10 +53,13 @@ URL Params:
 Yok
 
 Data Params:
+
+```json
 {
   "email": "string (zorunlu)",
   "password": "string (zorunlu)"
 }
+```
 
 Başarı Yanıtı:
 Kod: 200 OK
