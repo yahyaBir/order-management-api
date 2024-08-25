@@ -54,6 +54,22 @@ class AuthorTableSeeder extends Seeder
                 'name'=> 'Mert Arık',
                 'author_origin'=> 'local',
             ],
+            [
+                'name'=> 'Marcus Aurelius',
+                'author_origin'=> 'foreign',
+            ],
+            [
+                'name'=> 'Michael de Montaigne',
+                'author_origin'=> 'foreign',
+            ],
+            [
+                'name'=> 'George Orwell',
+                'author_origin'=> 'foreign',
+            ],
+            [
+                'name'=> 'Peyami Safa',
+                'author_origin'=> 'local',
+            ],
         ]);
     }
 }

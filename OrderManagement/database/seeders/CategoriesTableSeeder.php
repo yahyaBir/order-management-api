@@ -19,6 +19,8 @@ class CategoriesTableSeeder extends Seeder
             ['title' => 'Din'],
             ['title' => 'Bilim'],
             ['title' => 'Çocuk'],
+            ['title' => 'Öykü'],
+            ['title' => 'Felsefe'],
         ]);
     }
 }
