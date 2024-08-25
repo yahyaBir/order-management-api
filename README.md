@@ -431,8 +431,8 @@ Kod: 400 Bad Request
 OR
 
 Kod: 500 Internal Server Error
-```json
 İçerik:
+```json
 {
   "status": "error",
   "message": "An unexpected error occurred: {error_message}"
@@ -502,11 +502,9 @@ Kod: 200 OK
         "created_at": "2024-08-25T14:30:00",
         "updated_at": "2024-08-25T14:30:00"
       },
-      ...
     ],
     "first_page_url": "http://127.0.0.1:8000/api/v1/authors?page=1",
     "last_page_url": "http://127.0.0.1:8000/api/v1/authors?page=10",
-    ...
   }
 }
 ```
@@ -746,11 +744,9 @@ Kod: 200 OK
         "created_at": "2024-08-25T14:30:00",
         "updated_at": "2024-08-25T14:30:00"
       },
-      ...
     ],
     "first_page_url": "http://127.0.0.1:8000/api/v1/products?page=1",
     "last_page_url": "http://127.0.0.1:8000/api/v1/products?page=10",
-    ...
   }
 }
 ```
@@ -1046,7 +1042,6 @@ Kod: 200 OK
     ],
     "first_page_url": "http://127.0.0.1:8000/api/v1/orders?page=1",
     "last_page_url": "http://127.0.0.1:8000/api/v1/orders?page=10",
-    ...
   }
 }
 ```
