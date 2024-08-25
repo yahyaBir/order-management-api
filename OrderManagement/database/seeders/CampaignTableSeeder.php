@@ -15,12 +15,20 @@ class CampaignTableSeeder extends Seeder
     {
         DB::table('campaigns')->insert([
             [
-                'title' => '2 al, 1 bedava (Sabahattin Ali Roman)',
+                'title' => 'Buy 2, Get 1 Free (Sabahattin Ali Roman)',
                 'type' => 'buy_one_get_one',
                 'value' => null,
                 'discount_threshold' => null,
                 'category_id' => 1,
                 'author_id' => 3,
+            ],
+            [
+                'title' => 'Buy 3, Get 1 Free in Selected Categories',
+                'type' => 'buy_three_get_one',
+                'value' => null,
+                'discount_threshold' => null,
+                'category_id' => 4,
+                'author_id' => null,
             ],
             [
                 'title' => '5% Discount on Orders Over 200 TL',

@@ -29,4 +29,6 @@ Route::apiResource('orders', OrderController::class);
 
 Route::apiResource('authors', AuthorController::class);
 
+Route::apiResource('campaigns', CampaignController::class);
+
 

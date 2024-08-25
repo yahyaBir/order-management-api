@@ -74,7 +74,7 @@ class OrderService
         $order->discounted_amount = $discountAmount;
         $order->shipping_cost = $shippingCost;
         $order->total_amount = $totalAmount;
-        $order->applied_campaign = $campaignResult['appliedCampaign'];
+        $order->applied_campaign = $campaignResult['appliedCampaign'] ?: 'No applicable campaign';
         $order->save();
             return [
                 'status' => 'success',

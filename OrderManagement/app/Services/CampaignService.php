@@ -41,6 +41,24 @@ class CampaignService
                     }
                     break;
 
+                case 'buy_three_get_one':
+                    $filteredItems = $orderItems->filter(function ($item) use ($campaign) {
+                        return $item->product->category_id == $campaign->category_id;
+                    });
+
+                    $totalQuantity = $filteredItems->sum('quantity');
+                    if ($totalQuantity >= 3) {
+                        $prices = $filteredItems->sortBy('price')->pluck('price');
+                        $discountAmount = $prices->first();
+
+                        if ($discountAmount > $bestDiscount) {
+                            $bestDiscount = $discountAmount;
+                            $bestCampaign = $campaign->title;
+                            $appliedCampaign = true;
+                        }
+                    }
+                    break;
+
                 case 'discount_for_item':
                     $allLocalAuthors = $orderItems->every(function ($item) {
                         return $item->product->author->author_origin === 'local';

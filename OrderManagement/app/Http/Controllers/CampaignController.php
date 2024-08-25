@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Campaign;
 use App\Services\CampaignService;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,28 @@ class CampaignController extends Controller
     {
         $this->campaignService = $campaignService;
     }
-    public function index(){
-        $campaignResults = $this->campaignService->applyCampaigns();
-        return response($campaignResults, 200);
+    public function index()
+    {
+        $campaign = Campaign::paginate(20);
+
+        if ($campaign->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Bulunan sonuç sayfasında kampanya bulunamadı.',
+            ], 404);
+        } else {
+            $campaignData = $campaign->map(function ($campaign) {
+                return [
+                    'title' => $campaign->title,
+                    'type' => $campaign->type,
+                ];
+            });
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $campaignData,
+                'total' => $campaign->total(),
+            ], 200);
+        }
     }
 }
