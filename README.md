@@ -38,10 +38,10 @@ Proje, Laravel framework'ü kullanılarak geliştirilmiştir. Aşağıdaki adım
     DB_PASSWORD=
     ```
 
-    #AuthController API
+# AuthController API
 AuthController, kullanıcı kimlik doğrulama işlemleri için API uç noktaları sağlar. Bu uç noktalar kullanıcıların oturum açmasını, kaydolmasını, çıkış yapmasını, token yenilemesini ve kullanıcı bilgilerini almasını sağlar.
 
-##Kullanıcı Girişi
+## Kullanıcı Girişi
 
 URL:
 /api/v1/login
@@ -105,7 +105,7 @@ E-posta ve şifrenin doğru formatta girildiğinden emin olun.
 Yanıtları düzgün şekilde işlemek için hata kodlarını kontrol edin.
 Giriş başarılı olduğunda, JWT token'ınızı saklamayı unutmayın.
 
-##Kayıt Ol
+## Kayıt Ol
 URL:
 /api/v1/register
 
@@ -160,7 +160,7 @@ Notlar:
 Kayıt işlemi sırasında e-posta adresinin daha önce kullanılmadığından emin olun.
 Şifre uzunluğu en az 6 karakter olmalıdır.
 
-##Çıkış Yap
+## Çıkış Yap
 URL:
 /api/v1/logout
 
@@ -194,7 +194,7 @@ Notlar:
 Çıkış yaparken geçerli bir JWT token sağlamanız gerekmektedir.
 Çıkış yaptıktan sonra token geçersiz hale gelir.
 
-##Token Yenile
+## Token Yenile
 URL:
 /api/v1/refresh
 
@@ -226,7 +226,7 @@ Notlar:
 Yenileme işlemi için geçerli bir refresh token sağlamanız gerekmektedir.
 Token yenileme işlemi başarılı olduğunda, yeni bir JWT token alırsınız.
 
-##Kullanıcı Bilgilerini Al
+## Kullanıcı Bilgilerini Al
 URL:
 /api/v1/user
 
@@ -257,7 +257,7 @@ Kullanıcı bilgilerini alabilmek için geçerli bir JWT token sağlamanız gere
 
 
 
-  #CategoryController API
+# CategoryController API
 CategoryController, kategori yönetimi için API uç noktaları sağlar. Bu uç noktalar kategorilerin listelenmesini, görüntülenmesini, oluşturulmasını, güncellenmesini ve silinmesini sağlar.
 
 ##Kategori Listesi
@@ -342,7 +342,7 @@ curl -X GET "http://127.0.0.1:8000/api/v1/categories/1"
 Notlar:
 Kategori mevcut değilse, 404 hatası döner.
 
-##Kategori Oluştur
+## Kategori Oluştur
 URL:
 /api/v1/categories
 
@@ -389,7 +389,7 @@ Notlar:
 Kategori başlığı benzersiz olmalıdır.
 Geçerli bir başlık girilmelidir.
 
-##Kategori Güncelle
+## Kategori Güncelle
 URL:
 /api/v1/categories/{id}
 
@@ -447,7 +447,7 @@ curl -X PUT "http://127.0.0.1:8000/api/v1/categories/1" \
 Notlar:
 Kategori başlığı benzersiz olmalıdır.
 
-##Kategori Sil
+## Kategori Sil
 URL:
 /api/v1/categories/{id}
 
@@ -478,10 +478,10 @@ Kategori mevcut değilse veya silinemiyorsa, uygun hata yanıtı dönecektir.
 
 
 
-  #AuthorController API
+  # AuthorController API
 AuthorController, yazar yönetimi için API uç noktaları sağlar. Bu uç noktalar yazarların listelenmesini, görüntülenmesini, oluşturulmasını, güncellenmesini ve silinmesini sağlar.
 
-##Yazar Listesi
+## Yazar Listesi
 URL:
 /api/v1/authors
 
@@ -531,7 +531,7 @@ curl -X GET "http://127.0.0.1:8000/api/v1/authors"
 Notlar:
 Sayfalama kullanılır, döndürülen veriler sayfa numarası ve diğer sayfalama bilgilerini içerir.
 
-##Yazar Görüntüle
+## Yazar Görüntüle
 URL:
 /api/v1/authors/{id}
 
@@ -573,7 +573,7 @@ curl -X GET "http://127.0.0.1:8000/api/v1/authors/1"
 Notlar:
 Yazar mevcut değilse, 404 hatası döner.
 
-##Yazar Oluştur
+## Yazar Oluştur
 URL:
 /api/v1/authors
 
@@ -625,7 +625,7 @@ Notlar:
 Yazar adı benzersiz olmalıdır.
 Yazar kökeni yalnızca 'local' veya 'foreign' olabilir.
 
-##Yazar Güncelle
+## Yazar Güncelle
 URL:
 /api/v1/authors/{id}
 
@@ -686,7 +686,7 @@ Notlar:
 Yazar adı benzersiz olmalıdır.
 Yazar kökeni yalnızca 'local' veya 'foreign' olabilir.
 
-##Yazar Sil
+## Yazar Sil
 URL:
 /api/v1/authors/{id}
 
@@ -716,10 +716,10 @@ Yazar mevcut değilse veya silinemiyorsa, uygun hata yanıtı dönecektir.
 
 
 
-  #ProductController API
+  # ProductController API
 ProductController, ürün yönetimi için API uç noktaları sağlar. Bu uç noktalar ürünlerin listelenmesini, görüntülenmesini, oluşturulmasını, güncellenmesini ve silinmesini sağlar.
 
-##Ürün Listesi
+## Ürün Listesi
 
 URL:
 /api/v1/products
@@ -820,7 +820,7 @@ curl -X GET "http://127.0.0.1:8000/api/v1/products/1"
 Notlar:
 Ürün mevcut değilse, 404 hatası döner.
 
-##Ürün Oluştur
+## Ürün Oluştur
 URL:
 /api/v1/products
 
@@ -890,7 +890,7 @@ Notlar:
 Ürün başlığı benzersiz olmalıdır.
 Kategori ve yazar ID'leri mevcut olmalıdır.
 
-##Ürün Güncelle
+## Ürün Güncelle
 URL:
 /api/v1/products/{id}
 
@@ -960,7 +960,7 @@ Notlar:
 Ürün başlığı benzersiz olmalıdır.
 Kategori ve yazar ID'leri mevcut olmalıdır.
 
-##Ürün Sil
+## Ürün Sil
 URL:
 /api/v1/products/{id}
 
@@ -997,10 +997,10 @@ Notlar:
 
 ///////////////////////////////////////////////////////////////////////////
 
-  #OrderController API
+  # OrderController API
 OrderController, sipariş yönetimi için API uç noktaları sağlar. Bu uç noktalar siparişlerin listelenmesini, görüntülenmesini, oluşturulmasını ve silinmesini sağlar.
 
-##Sipariş Listesi
+## Sipariş Listesi
 URL: /api/v1/orders
 
 Method: GET
@@ -1052,7 +1052,7 @@ Hata Yanıtı: Kod: 404 Not Found
 curl -X GET "http://127.0.0.1:8000/api/v1/orders"
 Notlar: Sayfalama kullanılır; döndürülen veriler sayfa numarası ve diğer sayfalama bilgilerini içerir.
 
-##Sipariş Görüntüle
+## Sipariş Görüntüle
 URL: /api/v1/orders/{id}
 
 Method: GET
@@ -1099,7 +1099,7 @@ Hata Yanıtı: Kod: 404 Not Found
 curl -X GET "http://127.0.0.1:8000/api/v1/orders/1"
 Notlar: Sipariş mevcut değilse, 404 hatası döner.
 
-##Sipariş Oluştur
+## Sipariş Oluştur
 URL: /api/v1/orders
 
 Method: POST
@@ -1164,7 +1164,7 @@ curl -X POST "http://127.0.0.1:8000/api/v1/orders" \
      -d '{"order_items": [{"product_id": 1, "quantity": 2}]}'
 Notlar: Sipariş oluşturulurken ürün stokları güncellenir ve kampanya uygulanır.
 
-##Sipariş Sil
+## Sipariş Sil
 URL: /api/v1/orders/{id}
 
 Method: DELETE
@@ -1194,10 +1194,10 @@ Notlar: Sipariş mevcut değilse, 404 hatası döner.
 
 
 
-  #CampaignController API
+  # CampaignController API
 CampaignController, kampanya yönetimi için API uç noktaları sağlar. Bu uç noktalar kampanyaların listelenmesini ve yeni kampanya eklenmesini sağlar.
 
-##Kampanya Listesi
+## Kampanya Listesi
 URL: /api/v1/campaigns
 
 Method: GET
@@ -1231,7 +1231,7 @@ Hata Yanıtı: Kod: 404 Not Found
 curl -X GET "http://127.0.0.1:8000/api/v1/campaigns"
 Notlar: Sayfalama kullanılır; döndürülen veriler sayfa numarası ve diğer sayfalama bilgilerini içerir.
 
-##Yeni Kampanya Oluştur
+## Yeni Kampanya Oluştur
 URL: /api/v1/campaigns
 
 Method: POST
@@ -1298,7 +1298,7 @@ curl -X POST "http://127.0.0.1:8000/api/v1/campaigns" \
      
 Notlar: store method'u sadece is_admin middleware'i ile erişilebilir.
 
-##CampaignService
+## CampaignService
 CampaignService, kampanya işlemlerini yönetir ve uygulamak için gerekli fonksiyonları içerir.
 
 ##applyBestCampaign
@@ -1315,7 +1315,7 @@ Dönüş Değeri:
   "appliedCampaign": "Discount for amount"
 }
 
-##Açıklama:
+## Açıklama:
 discountedAmount: Uygulanan kampanya sonrası indirimli sipariş tutarı.
 discount: Uygulanan indirim miktarı.
 appliedCampaign: Uygulanan kampanyanın başlığı.
