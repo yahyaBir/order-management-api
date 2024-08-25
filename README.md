@@ -43,7 +43,7 @@ AuthController, kullanıcı kimlik doğrulama işlemleri için API uç noktalar�
 
 ## Kullanıcı Girişi
 
-URL:/api/v1/login
+URL:/api/v1/auth/login
 
 Method:POST
 
@@ -57,7 +57,8 @@ Data Params:
 }
 ```
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -68,7 +69,8 @@ Başarı Yanıtı:Kod: 200 OK
   "expires_in": 3600
 }
 ```
-Hata Yanıtı:Kod: 401 Unauthorized
+Hata Yanıtı:
+Kod: 401 Unauthorized
 İçerik:
 ```json
 {
@@ -82,7 +84,8 @@ Hata Yanıtı:Kod: 401 Unauthorized
 ```
 OR
 
-Kod: 422 Unprocessable Entityİçerik:
+Kod: 422 Unprocessable Entity
+İçerik:
 ```json
 {
   "status": "error",
@@ -101,13 +104,12 @@ curl -X POST "http://127.0.0.1:8000/api/v1/login" \
      -H "Content-Type: application/json" \
      -d '{"email": "user@example.com", "password": "password123"}'
      
-Notlar:
-E-posta ve şifrenin doğru formatta girildiğinden emin olun.
+Notlar:E-posta ve şifrenin doğru formatta girildiğinden emin olun.
 Yanıtları düzgün şekilde işlemek için hata kodlarını kontrol edin.
 Giriş başarılı olduğunda, JWT token'ınızı saklamayı unutmayın.
 
 ## Kayıt Ol
-URL:/api/v1/register
+URL:/api/v1/auth/register
 
 Method:POST
 
@@ -122,7 +124,8 @@ Data Params:
 }
 ```
 
-Başarı Yanıtı:Kod: 201 Created
+Başarı Yanıtı:
+Kod: 201 Created
 İçerik:
 ```json
 {
@@ -137,7 +140,8 @@ Başarı Yanıtı:Kod: 201 Created
 }
 ```
 
-Hata Yanıtı:Kod: 422 Unprocessable Entity
+Hata Yanıtı:
+Kod: 422 Unprocessable Entity
 İçerik:
 ```json
 {
@@ -162,7 +166,7 @@ Notlar:Kayıt işlemi sırasında e-posta adresinin daha önce kullanılmadığ�
 Şifre uzunluğu en az 6 karakter olmalıdır.
 
 ## Çıkış Yap
-URL:/api/v1/logout
+URL:/api/v1/auth/logout
 
 Method:POST
 
@@ -170,7 +174,8 @@ URL Params:Yok
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -193,7 +198,7 @@ Notlar:
 Çıkış yaptıktan sonra token geçersiz hale gelir.
 
 ## Token Yenile
-URL:/api/v1/refresh
+URL:/api/v1/auth/refresh
 
 Method:POST
 
@@ -201,7 +206,8 @@ URL Params:Yok
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -221,7 +227,7 @@ Notlar:Yenileme işlemi için geçerli bir refresh token sağlamanız gerekmekte
 Token yenileme işlemi başarılı olduğunda, yeni bir JWT token alırsınız.
 
 ## Kullanıcı Bilgilerini Al
-URL:/api/v1/user
+URL:/api/v1/auth/user
 
 Method:GET
 
@@ -229,7 +235,8 @@ URL Params:Yok
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -259,7 +266,8 @@ URL Params:Yok
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -277,7 +285,8 @@ Başarı Yanıtı:Kod: 200 OK
 }
 ```      
 
-Hata Yanıtı:Kod: 404 Not Found
+Hata Yanıtı:
+Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -296,11 +305,13 @@ URL:/api/v1/categories/{id}
 
 Method:GET
 
-URL Params:Required:id=[integer]
+URL Params:
+Required:id=[integer]
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -312,7 +323,8 @@ Başarı Yanıtı:Kod: 200 OK
 }
 ```
 
-Hata Yanıtı:Kod: 404 Not Found
+Hata Yanıtı:
+Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -382,13 +394,13 @@ URL Params:Required:id=[integer]
 
 Data Params:
 ```json
-json
 {
   "title": "string (zorunlu)"
 }
 ```
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```
 {
@@ -403,7 +415,8 @@ Başarı Yanıtı:Kod: 200 OK
 }
 ```
 
-Hata Yanıtı:Kod: 400 Bad Request
+Hata Yanıtı:
+Kod: 400 Bad Request
 İçerik:
 ```json
 {
@@ -438,11 +451,13 @@ URL:/api/v1/categories/{id}
 
 Method:DELETE
 
-URL Params:Required:id=[integer]
+URL Params:
+Required:id=[integer]
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -471,7 +486,8 @@ URL Params:Yok
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -495,7 +511,8 @@ Başarı Yanıtı:Kod: 200 OK
 }
 ```
 
-Hata Yanıtı:Kod: 404 Not Found
+Hata Yanıtı:
+Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -514,12 +531,13 @@ URL:/api/v1/authors/{id}
 
 Method:GET
 
-URL Params:Required:id=[integer]
+URL Params:
+Required:id=[integer]
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
-
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -534,7 +552,8 @@ Başarı Yanıtı:Kod: 200 OK
 }
 ```
 
-Hata Yanıtı:Kod: 404 Not Found
+Hata Yanıtı:
+Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -563,7 +582,8 @@ Data Params:
 }
 ```
 
-Başarı Yanıtı:Kod: 201 Created
+Başarı Yanıtı:
+Kod: 201 Created
 İçerik:
 ```json
 {
@@ -579,7 +599,8 @@ Başarı Yanıtı:Kod: 201 Created
 }
 ```
 
-Hata Yanıtı:Kod: 400 Bad Request
+Hata Yanıtı:
+Kod: 400 Bad Request
 İçerik:
 ```json
 {
@@ -605,7 +626,8 @@ URL:/api/v1/authors/{id}
 
 Method:PUT
 
-URL Params:Required:id=[integer]
+URL Params:
+Required:id=[integer]
 
 Data Params:
 ```json
@@ -669,7 +691,8 @@ URL:/api/v1/authors/{id}
 
 Method:DELETE
 
-URL Params:Required:id=[integer]
+URL Params:
+Required:id=[integer]
 
 Data Params:Yok
 
@@ -706,7 +729,6 @@ Data Params:Yok
 
 Başarı Yanıtı:
 Kod: 200 OK
-
 İçerik:
 ```json
 {
@@ -736,10 +758,12 @@ Kod: 200 OK
 Hata Yanıtı:
 Kod: 404 Not Found
 İçerik:
+```json
 {
   "status": "error",
   "message": "No products found in the current page of results."
 }
+```
 
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/products"
@@ -753,12 +777,13 @@ URL:/api/v1/products/{id}
 
 Method:GET
 
-URL Params:Required:id=[integer]
+URL Params:
+Required:id=[integer]
 
 Data Params:Yok
 
-Başarı Yanıtı:Kod: 200 OK
-
+Başarı Yanıtı:
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -872,7 +897,8 @@ URL:/api/v1/products/{id}
 
 Method:PUT
 
-URL Params:Required:id=[integer]
+URL Params:
+Required:id=[integer]
 
 Data Params:
 ```json
@@ -947,7 +973,8 @@ URL:/api/v1/products/{id}
 
 Method:DELETE
 
-URL Params:Required:id=[integer]
+URL Params:
+Required:id=[integer]
 
 Data Params:Yok
 
@@ -990,8 +1017,8 @@ URL Params: Yok
 
 Data Params: Yok
 
-Başarı Yanıtı: Kod: 200 OK
-
+Başarı Yanıtı: 
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -1042,12 +1069,12 @@ URL: /api/v1/orders/{id}
 
 Method: GET
 
-URL Params: Required: id=[integer]
+URL Params: 
+Required: id=[integer]
 
 Data Params: Yok
 
 Başarı Yanıtı: Kod: 200 OK
-
 İçerik:
 ```json
 {
@@ -1075,7 +1102,8 @@ Başarı Yanıtı: Kod: 200 OK
 }
 ```
 
-Hata Yanıtı: Kod: 404 Not Found
+Hata Yanıtı:
+Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -1166,12 +1194,13 @@ URL: /api/v1/orders/{id}
 
 Method: DELETE
 
-URL Params: Required: id=[integer]
+URL Params: 
+Required: id=[integer]
 
 Data Params: Yok
 
-Başarı Yanıtı: Kod: 200 OK
-
+Başarı Yanıtı: 
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -1179,8 +1208,8 @@ Başarı Yanıtı: Kod: 200 OK
   "message": "Order with ID {id} successfully deleted"
 }
 ```
-Hata Yanıtı: Kod: 404 Not Found
-
+Hata Yanıtı: 
+Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -1207,8 +1236,8 @@ URL Params: Yok
 
 Data Params: Yok
 
-Başarı Yanıtı: Kod: 200 OK
-
+Başarı Yanıtı: 
+Kod: 200 OK
 İçerik:
 ```json
 {
@@ -1223,7 +1252,8 @@ Başarı Yanıtı: Kod: 200 OK
 }
 ```
 
-Hata Yanıtı: Kod: 404 Not Found
+Hata Yanıtı: 
+Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -1256,7 +1286,8 @@ Data Params:
 }
 ```
 
-Başarı Yanıtı: Kod: 201 Created
+Başarı Yanıtı: 
+Kod: 201 Created
 İçerik:
 ```json
 {
@@ -1275,7 +1306,8 @@ Başarı Yanıtı: Kod: 201 Created
 }
 ```
 
-Hata Yanıtı: Kod: 400 Bad Request
+Hata Yanıtı: 
+Kod: 400 Bad Request
 İçerik:
 ```json
 {
@@ -1314,10 +1346,10 @@ Notlar: store method'u sadece is_admin middleware'i ile erişilebilir.
 ## CampaignService
 CampaignService, kampanya işlemlerini yönetir ve uygulamak için gerekli fonksiyonları içerir.
 
-##applyBestCampaign
+###applyBestCampaign
 Açıklama: Belirtilen sipariş öğelerine ve sipariş miktarına göre en iyi kampanyayı uygular.
 
-##Parametreler:
+###Parametreler:
 $orderItems: Sipariş öğeleri koleksiyonu (Collection).
 $orderAmount: Sipariş toplam miktarı (float).
 
