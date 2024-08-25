@@ -43,14 +43,11 @@ AuthController, kullanıcı kimlik doğrulama işlemleri için API uç noktalar�
 
 ## Kullanıcı Girişi
 
-URL:
-/api/v1/login
+URL:/api/v1/login
 
-Method:
-POST
+Method:POST
 
-URL Params:
-Yok
+URL Params:Yok
 
 Data Params:
 ```json
@@ -60,8 +57,7 @@ Data Params:
 }
 ```
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```json
 {
@@ -72,8 +68,7 @@ Kod: 200 OK
   "expires_in": 3600
 }
 ```
-Hata Yanıtı:
-Kod: 401 Unauthorized
+Hata Yanıtı:Kod: 401 Unauthorized
 İçerik:
 ```json
 {
@@ -87,8 +82,7 @@ Kod: 401 Unauthorized
 ```
 OR
 
-Kod: 422 Unprocessable Entity
-İçerik:
+Kod: 422 Unprocessable Entityİçerik:
 ```json
 {
   "status": "error",
@@ -113,14 +107,11 @@ Yanıtları düzgün şekilde işlemek için hata kodlarını kontrol edin.
 Giriş başarılı olduğunda, JWT token'ınızı saklamayı unutmayın.
 
 ## Kayıt Ol
-URL:
-/api/v1/register
+URL:/api/v1/register
 
-Method:
-POST
+Method:POST
 
-URL Params:
-Yok
+URL Params:Yok
 
 Data Params:
 ```json
@@ -131,8 +122,7 @@ Data Params:
 }
 ```
 
-Başarı Yanıtı:
-Kod: 201 Created
+Başarı Yanıtı:Kod: 201 Created
 İçerik:
 ```json
 {
@@ -147,8 +137,7 @@ Kod: 201 Created
 }
 ```
 
-Hata Yanıtı:
-Kod: 422 Unprocessable Entity
+Hata Yanıtı:Kod: 422 Unprocessable Entity
 İçerik:
 ```json
 {
@@ -169,25 +158,19 @@ curl -X POST "http://127.0.0.1:8000/api/v1/register" \
      -H "Content-Type: application/json" \
      -d '{"name": "John Doe", "email": "john.doe@example.com", "password": "password123"}'
      
-Notlar:
-Kayıt işlemi sırasında e-posta adresinin daha önce kullanılmadığından emin olun.
+Notlar:Kayıt işlemi sırasında e-posta adresinin daha önce kullanılmadığından emin olun.
 Şifre uzunluğu en az 6 karakter olmalıdır.
 
 ## Çıkış Yap
-URL:
-/api/v1/logout
+URL:/api/v1/logout
 
-Method:
-POST
+Method:POST
 
-URL Params:
-Yok
+URL Params:Yok
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```json
 {
@@ -210,20 +193,15 @@ Notlar:
 Çıkış yaptıktan sonra token geçersiz hale gelir.
 
 ## Token Yenile
-URL:
-/api/v1/refresh
+URL:/api/v1/refresh
 
-Method:
-POST
+Method:POST
 
-URL Params:
-Yok
+URL Params:Yok
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```json
 {
@@ -239,25 +217,19 @@ Kod: 200 OK
 curl -X POST "http://127.0.0.1:8000/api/v1/refresh" \
      -H "Authorization: Bearer YOUR_REFRESH_TOKEN"
      
-Notlar:
-Yenileme işlemi için geçerli bir refresh token sağlamanız gerekmektedir.
+Notlar:Yenileme işlemi için geçerli bir refresh token sağlamanız gerekmektedir.
 Token yenileme işlemi başarılı olduğunda, yeni bir JWT token alırsınız.
 
 ## Kullanıcı Bilgilerini Al
-URL:
-/api/v1/user
+URL:/api/v1/user
 
-Method:
-GET
+Method:GET
 
-URL Params:
-Yok
+URL Params:Yok
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```json
 {
@@ -271,8 +243,7 @@ Kod: 200 OK
 curl -X GET "http://127.0.0.1:8000/api/v1/user" \
      -H "Authorization: Bearer YOUR_ACCESS_TOKEN"
      
-Notlar:
-Kullanıcı bilgilerini alabilmek için geçerli bir JWT token sağlamanız gerekmektedir.
+Notlar:Kullanıcı bilgilerini alabilmek için geçerli bir JWT token sağlamanız gerekmektedir.
 
 
 
@@ -280,20 +251,15 @@ Kullanıcı bilgilerini alabilmek için geçerli bir JWT token sağlamanız gere
 CategoryController, kategori yönetimi için API uç noktaları sağlar. Bu uç noktalar kategorilerin listelenmesini, görüntülenmesini, oluşturulmasını, güncellenmesini ve silinmesini sağlar.
 
 ##Kategori Listesi
-URL:
-/api/v1/categories
+URL:/api/v1/categories
 
-Method:
-GET
+Method:GET
 
-URL Params:
-Yok
+URL Params:Yok
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```json
 {
@@ -311,8 +277,7 @@ Kod: 200 OK
 }
 ```      
 
-Hata Yanıtı:
-Kod: 404 Not Found
+Hata Yanıtı:Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -324,24 +289,18 @@ Kod: 404 Not Found
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/categories"
 
-Notlar:
-Sayfalama kullanılır, döndürülen veriler sayfa numarası ve diğer sayfalama bilgilerini içerir.
+Notlar:Sayfalama kullanılır, döndürülen veriler sayfa numarası ve diğer sayfalama bilgilerini içerir.
 
 ##Kategori Görüntüle
-URL:
-/api/v1/categories/{id}
+URL:/api/v1/categories/{id}
 
-Method:
-GET
+Method:GET
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```json
 {
@@ -353,8 +312,7 @@ Kod: 200 OK
 }
 ```
 
-Hata Yanıtı:
-Kod: 404 Not Found
+Hata Yanıtı:Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -366,18 +324,14 @@ Kod: 404 Not Found
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/categories/1"
 
-Notlar:
-Kategori mevcut değilse, 404 hatası döner.
+Notlar:Kategori mevcut değilse, 404 hatası döner.
 
 ## Kategori Oluştur
-URL:
-/api/v1/categories
+URL:/api/v1/categories
 
-Method:
-POST
+Method:POST
 
-URL Params:
-Yok
+URL Params:Yok
 
 Data Params:
 {
@@ -416,19 +370,15 @@ curl -X POST "http://127.0.0.1:8000/api/v1/categories" \
      -H "Content-Type: application/json" \
      -d '{"title": "New Category"}'
      
-Notlar:
-Kategori başlığı benzersiz olmalıdır.
+Notlar:Kategori başlığı benzersiz olmalıdır.
 Geçerli bir başlık girilmelidir.
 
 ## Kategori Güncelle
-URL:
-/api/v1/categories/{id}
+URL:/api/v1/categories/{id}
 
-Method:
-PUT
+Method:PUT
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
 Data Params:
 ```json
@@ -438,8 +388,7 @@ json
 }
 ```
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```
 {
@@ -454,8 +403,7 @@ Kod: 200 OK
 }
 ```
 
-Hata Yanıtı:
-Kod: 400 Bad Request
+Hata Yanıtı:Kod: 400 Bad Request
 İçerik:
 ```json
 {
@@ -483,25 +431,18 @@ curl -X PUT "http://127.0.0.1:8000/api/v1/categories/1" \
      -H "Content-Type: application/json" \
      -d '{"title": "Updated Category"}'
      
-Notlar:
-Kategori başlığı benzersiz olmalıdır.
+Notlar:Kategori başlığı benzersiz olmalıdır.
 
 ## Kategori Sil
-URL:
-/api/v1/categories/{id}
+URL:/api/v1/categories/{id}
 
-Method:
-DELETE
+Method:DELETE
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
-
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```json
 {
@@ -512,9 +453,8 @@ Kod: 200 OK
 
 Örnek Çağrı:
 curl -X DELETE "http://127.0.0.1:8000/api/v1/categories/1"
-Notlar:
 
-Silinen kategori ID'si ile geri dönecek bilgiye dikkat edin.
+Notlar:Silinen kategori ID'si ile geri dönecek bilgiye dikkat edin.
 Kategori mevcut değilse veya silinemiyorsa, uygun hata yanıtı dönecektir.
 
 
@@ -523,20 +463,15 @@ Kategori mevcut değilse veya silinemiyorsa, uygun hata yanıtı dönecektir.
 AuthorController, yazar yönetimi için API uç noktaları sağlar. Bu uç noktalar yazarların listelenmesini, görüntülenmesini, oluşturulmasını, güncellenmesini ve silinmesini sağlar.
 
 ## Yazar Listesi
-URL:
-/api/v1/authors
+URL:/api/v1/authors
 
-Method:
-GET
+Method:GET
 
-URL Params:
-Yok
+URL Params:Yok
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 İçerik:
 ```json
 {
@@ -560,8 +495,7 @@ Kod: 200 OK
 }
 ```
 
-Hata Yanıtı:
-Kod: 404 Not Found
+Hata Yanıtı:Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -573,24 +507,18 @@ Kod: 404 Not Found
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/authors"
 
-Notlar:
-Sayfalama kullanılır, döndürülen veriler sayfa numarası ve diğer sayfalama bilgilerini içerir.
+Notlar:Sayfalama kullanılır, döndürülen veriler sayfa numarası ve diğer sayfalama bilgilerini içerir.
 
 ## Yazar Görüntüle
-URL:
-/api/v1/authors/{id}
+URL:/api/v1/authors/{id}
 
-Method:
-GET
+Method:GET
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 
 İçerik:
 ```json
@@ -606,8 +534,7 @@ Kod: 200 OK
 }
 ```
 
-Hata Yanıtı:
-Kod: 404 Not Found
+Hata Yanıtı:Kod: 404 Not Found
 İçerik:
 ```json
 {
@@ -619,18 +546,14 @@ Kod: 404 Not Found
 Örnek Çağrı:
 curl -X GET "http://127.0.0.1:8000/api/v1/authors/1"
 
-Notlar:
-Yazar mevcut değilse, 404 hatası döner.
+Notlar:Yazar mevcut değilse, 404 hatası döner.
 
 ## Yazar Oluştur
-URL:
-/api/v1/authors
+URL:/api/v1/authors
 
-Method:
-POST
+Method:POST
 
-URL Params:
-Yok
+URL Params:Yok
 
 Data Params:
 ```json
@@ -640,8 +563,7 @@ Data Params:
 }
 ```
 
-Başarı Yanıtı:
-Kod: 201 Created
+Başarı Yanıtı:Kod: 201 Created
 İçerik:
 ```json
 {
@@ -657,8 +579,7 @@ Kod: 201 Created
 }
 ```
 
-Hata Yanıtı:
-Kod: 400 Bad Request
+Hata Yanıtı:Kod: 400 Bad Request
 İçerik:
 ```json
 {
@@ -676,19 +597,15 @@ curl -X POST "http://127.0.0.1:8000/api/v1/authors" \
      -H "Content-Type: application/json" \
      -d '{"name": "New Author", "author_origin": "local"}'
      
-Notlar:
-Yazar adı benzersiz olmalıdır.
+Notlar:Yazar adı benzersiz olmalıdır.
 Yazar kökeni yalnızca 'local' veya 'foreign' olabilir.
 
 ## Yazar Güncelle
-URL:
-/api/v1/authors/{id}
+URL:/api/v1/authors/{id}
 
-Method:
-PUT
+Method:PUT
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
 Data Params:
 ```json
@@ -744,22 +661,17 @@ curl -X PUT "http://127.0.0.1:8000/api/v1/authors/1" \
      -H "Content-Type: application/json" \
      -d '{"name": "Updated Author", "author_origin": "foreign"}'
      
-Notlar:
-Yazar adı benzersiz olmalıdır.
+Notlar:Yazar adı benzersiz olmalıdır.
 Yazar kökeni yalnızca 'local' veya 'foreign' olabilir.
 
 ## Yazar Sil
-URL:
-/api/v1/authors/{id}
+URL:/api/v1/authors/{id}
 
-Method:
-DELETE
+Method:DELETE
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
-Data Params:
-Yok
+Data Params:Yok
 
 Başarı Yanıtı:
 Kod: 200 OK
@@ -774,8 +686,7 @@ Kod: 200 OK
 Örnek Çağrı:
 curl -X DELETE "http://127.0.0.1:8000/api/v1/authors/1"
 
-Notlar:
-Silinen yazar ID'si ile geri dönecek bilgiye dikkat edin.
+Notlar:Silinen yazar ID'si ile geri dönecek bilgiye dikkat edin.
 Yazar mevcut değilse veya silinemiyorsa, uygun hata yanıtı dönecektir.
 
 
@@ -785,17 +696,13 @@ ProductController, ürün yönetimi için API uç noktaları sağlar. Bu uç nok
 
 ## Ürün Listesi
 
-URL:
-/api/v1/products
+URL:/api/v1/products
 
-Method:
-GET
+Method:GET
 
-URL Params:
-Yok
+URL Params:Yok
 
-Data Params:
-Yok
+Data Params:Yok
 
 Başarı Yanıtı:
 Kod: 200 OK
@@ -842,20 +749,15 @@ Sayfalama kullanılır; döndürülen veriler sayfa numarası ve diğer sayfalam
 
 ##Ürün Görüntüle
 
-URL:
-/api/v1/products/{id}
+URL:/api/v1/products/{id}
 
-Method:
-GET
+Method:GET
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
-Data Params:
-Yok
+Data Params:Yok
 
-Başarı Yanıtı:
-Kod: 200 OK
+Başarı Yanıtı:Kod: 200 OK
 
 İçerik:
 ```json
@@ -891,14 +793,11 @@ Notlar:
 Ürün mevcut değilse, 404 hatası döner.
 
 ## Ürün Oluştur
-URL:
-/api/v1/products
+URL:/api/v1/products
 
-Method:
-POST
+Method:POST
 
-URL Params:
-Yok
+URL Params:Yok
 
 Data Params:
 ```json
@@ -969,14 +868,11 @@ Notlar:
 Kategori ve yazar ID'leri mevcut olmalıdır.
 
 ## Ürün Güncelle
-URL:
-/api/v1/products/{id}
+URL:/api/v1/products/{id}
 
-Method:
-PUT
+Method:PUT
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
 Data Params:
 ```json
@@ -1047,17 +943,13 @@ Notlar:
 Kategori ve yazar ID'leri mevcut olmalıdır.
 
 ## Ürün Sil
-URL:
-/api/v1/products/{id}
+URL:/api/v1/products/{id}
 
-Method:
-DELETE
+Method:DELETE
 
-URL Params:
-Required:id=[integer]
+URL Params:Required:id=[integer]
 
-Data Params:
-Yok
+Data Params:Yok
 
 Başarı Yanıtı:
 Kod: 200 OK
